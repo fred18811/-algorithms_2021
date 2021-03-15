@@ -26,3 +26,72 @@
 Для реализации хранилища можно применить любой подход,
 который вы придумаете, например, реализовать словарь.
 """
+
+user_data = {"Anna":{"pass":"GGefdg!34f","active":1},"Den":{"pass":"fdgewgv43","active":0},"Georgy":{"pass":"ggrvwefqwe","active":1}}
+login = "Den"
+passwd = "fdgewgv43"
+
+
+###############################################################
+def get_access_1(data, log, passwd):
+####Сложность: O(n)
+    if log in data:                                 # O(n)
+        if data[log]["pass"] is passwd:             # O(1)
+            if data[log]["active"]:                 # O(1)
+                return "Access allowed"             # O(1)
+            else:
+                return "Account is not activated, are you want to activate it?"    # O(1)
+        else:
+            return "Password not incorrect"         # O(1)
+    else:
+        return "Access denied"                      # O(1)
+
+
+###############################################################
+def get_access_2(data, log, passwd):
+####Сложность: O(1)
+    try:
+        if data[log] and data[log]["pass"] is passwd:                               # O(1)
+            if data[log]["active"]:                                                 # O(1)
+                return "Access allowed"                                             # O(1)
+            else:
+                return "Account is not activated, are you want to activate it?"     # O(1)
+        else:
+            return "Password not incorrect"                                         # O(1)
+    except KeyError:
+        return "Access denied"                                                      # O(1)
+
+
+###############################################################
+def get_access_3(data, log, passwd):
+####Сложность: O(n^2)
+    if log in data:                                                                     # O(n)
+        for key in data:                                                                # O(n)
+            if data[log]["pass"] is passwd:                                             # O(1)
+                if data[log]["active"]:                                                 # O(1)
+                    return "Access allowed"                                             # O(1)
+                else:
+                    return "Account is not activated, are you want to activate it?"     # O(1)
+        else:
+            return "Password not incorrect"                                             # O(1)
+    else:
+        return "Access denied"                                                          # O(1)
+
+
+###############################################################
+
+####Первый вариант
+print(format(get_access_1(user_data, "Den", "fdgewgv43")))
+
+####Второй вариант
+print(format(get_access_2(user_data, "Anna", "GGefdg!34f")))
+
+####Третий вариант
+print(format(get_access_3(user_data, "Georgy", "5435gre")))
+
+
+"""
+Второе решение эффективнее, 
+т.к. у решения константная зависимость, 
+что эффективнее чем линейная и квадратичная зависимости
+"""
